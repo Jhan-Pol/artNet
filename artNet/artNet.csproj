@@ -14,4 +14,12 @@
     <None Include="C:\Users\jhanp\source\repos\artNet\artNet\Models\.editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Infraestructure\Data\" />
+    <Folder Include="Infraestructure\Identity\" />
+    <Folder Include="Infraestructure\Repositories\" />
+    <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
+
 </Project>
