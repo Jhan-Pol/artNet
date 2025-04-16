@@ -17,6 +17,7 @@
   <ItemGroup>
     <Folder Include="Infraestructure\Data\" />
     <Folder Include="Infraestructure\Identity\" />
+    <Folder Include="Infraestructure\Migrations\" />
     <Folder Include="Infraestructure\Repositories\" />
     <Folder Include="Services\Interfaces\" />
   </ItemGroup>
