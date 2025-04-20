@@ -33,7 +33,7 @@
     font-size: 85px;
 }
 
-.Login {
+.form_container {
     display: flex;
     width: 40%;
     flex-direction: column;
@@ -68,7 +68,7 @@ form {
 .input-form {
     width: 70%;
     padding: 6px 15px;
-    color: #3477d3;
+    
     background-image: linear-gradient(90deg, #80b5ff 0%, #ffffff 30%, #f7c1ff 50%);
     font-size: 25px;
     border-radius: 50px

@@ -8,6 +8,10 @@ namespace artNet.Controllers
         {
             return View();
         }
+        public IActionResult SignUp()
+        {
+            return View();
+        }
 
     }
 }
