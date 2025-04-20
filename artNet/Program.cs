@@ -9,6 +9,9 @@ namespace artNet
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            var mappingConfiguration = new MapperConfiguration(m => m.AddProfile(new MProfile()));
+            IMapper mapper = mappingConfiguration.CreateMapper();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
