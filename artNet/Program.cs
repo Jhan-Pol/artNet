@@ -1,8 +1,9 @@
-using Application;
 using AutoMapper;
-using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
-using Services.Common;
+using artNet.Application;
+using artNet.Infrastructure;
+using artNet.Services.Common;
+
 
 namespace artNet
 {
@@ -13,7 +14,7 @@ namespace artNet
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            //  var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             var mappingConfiguration = new MapperConfiguration(m => m.AddProfile(new MProfile()));
             IMapper mapper = mappingConfiguration.CreateMapper();
             builder.Services.AddSingleton(mapper);
@@ -23,6 +24,10 @@ namespace artNet
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
             var app = builder.Build();
 

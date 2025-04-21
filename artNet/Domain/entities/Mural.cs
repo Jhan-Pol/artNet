@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace artNet.Domain.entities
 {
@@ -20,9 +21,9 @@ namespace artNet.Domain.entities
         public virtual string Location { get; set; }
 
         [Required]
-        public Guid ArtistaId { get; set; }
+        public virtual Guid Artista { get; set; }
 
         [ForeignKey("ArtistaId")]
-        public virtual Artista ? Artista { get; set; }
+        public virtual Artista ? ArtistaId { get; set; }
         }
 }

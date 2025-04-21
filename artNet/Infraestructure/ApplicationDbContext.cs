@@ -1,10 +1,18 @@
-﻿using Domain.entities;
+﻿using artNet.Domain.entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
+using System.Reflection;
+using System.Collections.Generic;
 
-namespace Infrastructure.Repositories
+namespace artnet.Infrastructure
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
+    public class ApplicationDbContext : DbContext
     {
         //adicionar aqui las entidades que se van a usar en la aplicacion
         public DbSet<Usuario> Usuario { get; set; }

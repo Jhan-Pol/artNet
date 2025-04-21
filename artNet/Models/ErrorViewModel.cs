@@ -1,4 +1,4 @@
-namespace artNet.Domain.entities
+namespace artNet.Models
 {
     public class ErrorViewModel
     {
