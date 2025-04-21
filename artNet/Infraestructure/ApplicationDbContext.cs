@@ -1,5 +1,4 @@
 ﻿using artNet.Domain.entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -10,7 +9,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace artnet.Infrastructure
+namespace artNet.Infraestructure
 {
     public class ApplicationDbContext : DbContext
     {
