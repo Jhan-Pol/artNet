@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+=======
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore; // Agregado
+using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore; // Agregado
+using artNet.Infraestructure;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> dev/garces
 
 namespace artNet
 {
@@ -11,6 +19,14 @@ namespace artNet
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -32,10 +48,13 @@ namespace artNet
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseMigrationsEndPoint();
+            }
+            else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -47,8 +66,14 @@ namespace artNet
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
+<<<<<<< HEAD
                 pattern: "{controller=Account}/{action=SignUp}/{id?}")
+=======
+                pattern: "{controller=Home}/{action=Index}/{id?}")
+>>>>>>> dev/garces
                 .WithStaticAssets();
+            app.MapRazorPages()
+               .WithStaticAssets();
 
             app.Run();
         }
