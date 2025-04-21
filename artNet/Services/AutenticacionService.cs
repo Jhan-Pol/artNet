@@ -2,12 +2,13 @@
 using System.Security.Claims;
 using System.Text;
 using artNet.Services.Interfaces;
-
+using artNet.Infraestructure;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using artNet.Models;
 using artNet.Domain.Entities.User;
 using static artNet.Models.AutenticacionViewModels;
+using Microsoft.EntityFrameworkCore;
 
 
 
@@ -28,7 +29,7 @@ namespace artNet.Services
         {
             var user = new User { Username = request.Username, Email = request.Email, PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password) };
 
-            _context.Users.Add(user);
+            _context.User.Add(user);
             await _context.SaveChangesAsync();
 
             return GenerateJwtToken(user);
@@ -37,7 +38,7 @@ namespace artNet.Services
 
         public async Task<string> LoginAsync(LoginRequest request)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+            var user = await _context.User.FirstOrDefaultAsync(u => u.Username == request.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
                 throw new UnauthorizedAccessException("Credenciales inválidas.");
 
@@ -47,7 +48,7 @@ namespace artNet.Services
 
         public Task<User?> GetUserByUsernameAsync(string username)
         {
-            return _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return _context.User.FirstOrDefaultAsync(u => u.Username == username);
         }
 
         private string GenerateJwtToken(User user)

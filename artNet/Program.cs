@@ -1,15 +1,10 @@
-<<<<<<< HEAD
+
+using artNet.Infraestructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-=======
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore; // Agregado
-using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore; // Agregado
-using artNet.Infraestructure;
-using Microsoft.EntityFrameworkCore;
->>>>>>> dev/garces
-
 namespace artNet
 {
     public class Program
@@ -66,11 +61,9 @@ namespace artNet
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-<<<<<<< HEAD
+
                 pattern: "{controller=Account}/{action=SignUp}/{id?}")
-=======
-                pattern: "{controller=Home}/{action=Index}/{id?}")
->>>>>>> dev/garces
+
                 .WithStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
