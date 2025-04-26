@@ -3,21 +3,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace artNet.Domain.entities
 {
-	public class Reaccion
-	{
-		[Key]
+    public class Reaccion
+    {
+        [Key]
         public virtual Guid Id { get; set; }
 
-		public virtual int? no_likes { get; set; }
+        public virtual int? no_likes { get; set; }
 
-		public virtual Guid usuario { get; set; }
+        // Clave foránea para Usuario
+        [Required]
+        public virtual Guid UsuarioId { get; set; } // Clave foránea
 
-		[ForeignKey("usuarioId")]
-        public virtual Usuario? usuarioId { get; set; }
+        [ForeignKey("UsuarioId")]
+        public virtual Usuario? Usuario { get; set; } // Propiedad de navegación
 
-        public virtual Guid mural { get; set; }
+        // Clave foránea para Mural
+        [Required]
+        public virtual Guid MuralId { get; set; } // Clave foránea
 
-        [ForeignKey("mural")]
-        public virtual Mural? muralId { get; set; }
+        [ForeignKey("MuralId")]
+        public virtual Mural? Mural { get; set; } // Propiedad de navegación
     }
 }
