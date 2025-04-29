@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infraestructure\Data\" />
     <Folder Include="Infraestructure\Identity\" />
     <Folder Include="Infraestructure\Repositories\" />
   </ItemGroup>

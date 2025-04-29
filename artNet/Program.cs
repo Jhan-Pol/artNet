@@ -1,45 +1,42 @@
-
+using artNet.Infraestructure.Data;
 using artNet.Infraestructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+
 namespace artNet
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+          
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllersWithViews();
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
-        };
-    });
+            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false; // Puedes activar confirmación de cuenta si quieres
+            })
+.AddRoles<IdentityRole>() // <<--- MUY IMPORTANTE si usarás Roles (Artista, Usuario, Admin)
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
-            builder.Services.AddAuthorization();
-
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Tiempo de expiración si RememberMe es true
+                options.SlidingExpiration = true; // Extiende el tiempo si el usuario sigue activo
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -57,12 +54,17 @@ namespace artNet
             app.UseRouting();
 
             app.UseAuthorization();
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                await DbInitializer.SeedRolesAsync(services);
+            }
 
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
 
-                pattern: "{controller=Account}/{action=SignUp}/{id?}")
+                pattern: "{controller=Account}/{action=Login}/{id?}")
 
                 .WithStaticAssets();
             app.MapRazorPages()

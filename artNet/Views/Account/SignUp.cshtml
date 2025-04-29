@@ -1,11 +1,13 @@
 ﻿@{
     Layout = null;
 }
+@model SignUpViewModel;
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Registrarse</title>
     <link href="~/css/Account.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,22 +30,37 @@
             <div style="font-size:30px;">--------------------------------------</div>
         </div>
     </div>
+
     <div class="form_container">
         <div class="tittle-form" style="margin-top : 70px">Registrarse</div>
-        <form class="form">
+        <form class="form" method="post" asp-action="SignUp">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+            <input class="input-form" type="text" id="UserName" name="UserName" placeholder="Apodo" required />
 
-            <input class="input-form" type="text" id="exampleInputEmail1" placeholder="Apodo">
+            <input class="input-form" type="email" id="Email" name="Email" aria-describedby="emailHelp" placeholder="Correo" required />
 
-            <input class="input-form" type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Correo">
+            <input type="password" class="input-form" id="Password" name="Password" placeholder="Contraseña" required />
 
-            <input type="password" class="input-form" id="exampleInputPassword1" placeholder="Contraseña">
+            <input type="password" class="input-form" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirmar Contraseña" required />
 
-            <button type="submit" class="button-form">Iniciar</button>
+            <span style="font-size: 25px; font-family: 'Times New Roman', Times, serif;">¿Con qué rol te vincularás? :)</span>
+            <select class="select-rol" name="Role" aria-label="Seleccionar rol">
+                <option value="Usuario" selected>Usuario</option>
+                <option value="Artista">Artista</option>
+            </select>
 
+            <button type="submit" class="button-form">Registrarse</button>
         </form>
-        <a href="https://www.ejemplo.com">¿Olvidaste tu contraseña?</a>
-        <div style="font-size:30px;">------------------------------</div>
     </div>
-
 </body>
 </html>

@@ -57,11 +57,10 @@ form {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 38px;
     align-items: center;
     justify-content: center;
     margin-bottom: 40px;
-    
 }
 
 
@@ -80,7 +79,18 @@ form {
 }
 
 .tittle-form {
-    margin: 90px auto 50px auto;
+    margin: auto auto 30px auto;
     font-size: 50px;
     font-family: 'Times New Roman', Times, serif;
+  
+}
+
+.select-rol {
+    width: auto;
+    border: 2px solid #000;
+    border-radius: 80px;
+    font-size: 20px;
+    font-style: italic;
+    text-align: center;
+    padding: 4px;
 }

@@ -14,14 +14,18 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace artNet.Infraestructure
 {
-    public class ApplicationDbContext(DbContextOptions < ApplicationDbContext > options) : IdentityDbContext(options)
+    public class ApplicationDbContext : IdentityDbContext
     {
-        //adicionar aqui las entidades que se van a usar en la aplicacion
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+
+        }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Artista> Artista { get; set; }
         public DbSet<Mural> Mural { get; set; }
-        public DbSet<Reaccion> Reaccion {  get; set; }
+        public DbSet<Reaccion> Reaccion { get; set; }
         public DbSet<User> User { get; set; }
     }
 }
