@@ -30,7 +30,7 @@
 
     <div class="form_container">
         <div class="tittle-form">Iniciar Sesión</div>
-        <form class="form" method="post" asp-action="Login">
+        <form class="form" style= "gap: 25px" method="post" asp-action="Login">
             @if (!ViewData.ModelState.IsValid)
             {
                 <div class="alert alert-danger">
@@ -43,15 +43,15 @@
                 </div>
             }
 
-            <div class="form-group">
-                <input class="input-form" asp-for="Email" placeholder="Correo" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+            
+            <input class="input-form" asp-for="Email" placeholder="Correo" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            
 
-            <div class="form-group">
-                <input asp-for="Password" class="input-form" placeholder="Contraseña" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+            
+            <input asp-for="Password" class="input-form" placeholder="Contraseña" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            
 
             <span style="font-size: 25px; font-family: 'Times New Roman', Times, serif;">¿Con qué rol estás vinculado? :)</span>
             <select class="select-rol" name="Role" aria-label="Rol" disabled>
@@ -59,12 +59,10 @@
                 <option value="Artista">Artista</option>
             </select>
 
-            <div class="form-group form-check" style="margin-top: 15px;">
-                <input asp-for="RememberMe" class="form-check-input" />
-                <label asp-for="RememberMe" class="form-check-label" style="font-size: 20px;">Recordarme</label>
-            </div>
+            
 
             <button type="submit" class="button-form">Iniciar sesión</button>
+            <a href="/Account/SignUp" class="link-form">¿Aun no tienes cuenta? Registrate</a>
         </form>
     </div>
 </body>

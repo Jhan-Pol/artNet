@@ -32,8 +32,8 @@
     </div>
 
     <div class="form_container">
-        <div class="tittle-form" style="margin-top : 70px">Registrarse</div>
-        <form class="form" method="post" asp-action="SignUp">
+        <div class="tittle-form" style="margin-top : 30px">Registrarse</div>
+        <form class="form" style= "gap: 20px" method="post" asp-action="SignUp">
             @if (!ViewData.ModelState.IsValid)
             {
                 <div class="alert alert-danger">
@@ -60,6 +60,7 @@
             </select>
 
             <button type="submit" class="button-form">Registrarse</button>
+            <a href="/Account/Login" class="link-form">¿Ya tienes cuenta? Inicia sesión</a>
         </form>
     </div>
 </body>

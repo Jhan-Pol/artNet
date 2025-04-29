@@ -34,9 +34,15 @@ namespace artNet
             {
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Tiempo de expiración si RememberMe es true
-                options.SlidingExpiration = true; // Extiende el tiempo si el usuario sigue activo
+                options.Cookie.IsEssential = true;
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(365); // Expira automáticamente tras 1h de inactividad
+                options.SlidingExpiration = true; // Opcional: renueva si hay actividad
             });
+
+
+            builder.Services.AddControllersWithViews();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -52,7 +58,7 @@ namespace artNet
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
             using (var scope = app.Services.CreateScope())
             {
@@ -64,7 +70,7 @@ namespace artNet
             app.MapControllerRoute(
                 name: "default",
 
-                pattern: "{controller=Account}/{action=Login}/{id?}")
+                pattern: "{controller=Account}/{action=SignUp}/{id?}")
 
                 .WithStaticAssets();
             app.MapRazorPages()
