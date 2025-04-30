@@ -1,5 +1,7 @@
 
 using artNet.Infraestructure;
+using artNet.Services.Interfaces;
+using artNet.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,8 @@ namespace artNet
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            
+            builder.Services.AddScoped<IPublicacionesServices, PublicacionesServices>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -67,6 +71,10 @@ namespace artNet
                 .WithStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
+
+            app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Publicaciones}/{action=Index}/{id?}");
 
             app.Run();
         }

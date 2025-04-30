@@ -1,0 +1,32 @@
+﻿@page
+@model IEnumerable<artNet.Models.PublicacionesViewModel>
+
+<h1>Lista de Publicaciones</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Artista</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var publicacion in Model)
+        {
+            <tr>
+                <td>@publicacion.Titulo</td>
+                <td>@publicacion.Descripcion</td>
+                <td>@(publicacion.Estado ? "Activo" : "Inactivo")</td>
+                <td>@publicacion.ArtistaNombre</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@publicacion.Id" class="btn btn-info">Detalles</a>
+                    <a asp-action="Edit" asp-route-id="@publicacion.Id" class="btn btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@publicacion.Id" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

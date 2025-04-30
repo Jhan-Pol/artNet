@@ -1,0 +1,16 @@
+﻿@model artNet.Models.PublicacionesViewModel
+
+<h1>Detalles de la Publicación</h1>
+
+<div>
+    <h2>@Model.Titulo</h2>
+    <p><strong>Descripción:</strong> @Model.Descripcion</p>
+    <p><strong>Estado:</strong> @(Model.Estado ? "Activo" : "Inactivo")</p>
+    <p><strong>Artista:</strong> @Model.ArtistaNombre</p>
+    @if (!string.IsNullOrEmpty(Model.Imagen))
+    {
+        <img src="@Model.Imagen" alt="Imagen de la publicación" style="max-width: 100%; height: auto;" />
+    }
+</div>
+
+<a asp-action="Index" class="btn btn-primary">Volver a la lista</a>

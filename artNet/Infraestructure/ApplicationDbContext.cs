@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using artNet.Domain.Entities.User;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using artNet.Domain.Entities;
 
 namespace artNet.Infraestructure
 {
@@ -23,5 +24,6 @@ namespace artNet.Infraestructure
         public DbSet<Mural> Mural { get; set; }
         public DbSet<Reaccion> Reaccion {  get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Publicaciones> Publicaciones { get; set; }
     }
 }
