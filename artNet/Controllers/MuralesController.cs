@@ -2,6 +2,7 @@
 using artNet.Domain.Entities; // Artista
 using artNet.Infraestructure;
 using artNet.Models;
+using artNet.Services; // Importa el servicio
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,13 @@ using System.Security.Claims;
 public class MuralesController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly IMuralService _muralService;
 
-    public MuralesController(ApplicationDbContext context)
+    // Inyección de dependencia del servicio
+    public MuralesController(ApplicationDbContext context, IMuralService muralService)
     {
         _context = context;
+        _muralService = muralService;
     }
 
     // Visible para todos los usuarios
@@ -56,33 +60,20 @@ public class MuralesController : Controller
                 return View(model);
             }
 
-            // Buscar al artista por su email
-            var artista = await _context.Artistas
-                .FirstOrDefaultAsync(a => a.email == userEmail);
+            // Llamar al servicio para crear el mural
+            bool success = await _muralService.CrearMuralAsync(model, userEmail);
 
-            if (artista == null)
+            if (success)
             {
-                ModelState.AddModelError("", "No se encontró un artista asociado a este usuario.");
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ModelState.AddModelError("", "Hubo un error al crear el mural.");
                 return View(model);
             }
-
-            var mural = new Mural
-            {
-                Id = Guid.NewGuid(),
-                Titulo = model.Nombre,
-                Descripcion = model.Descripcion,
-                Ciudad = model.Ciudad,      // Asocia la ciudad
-                ImagenUrl = model.UrlImagen, // Asocia la URL de la imagen
-                FechaCreacion = DateTime.UtcNow,
-                ArtistaId = artista.Id // Asocia correctamente al artista
-            };
-
-            _context.Murales.Add(mural);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         return View(model);
     }
 }
-

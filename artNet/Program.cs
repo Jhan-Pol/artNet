@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+using artNet.Services;
+
 namespace artNet
 {
     public class Program
@@ -21,8 +23,9 @@ namespace artNet
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            builder.Services.AddScoped<IMuralService, MuralService>();
             builder.Services.AddControllersWithViews();
+
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false; // Puedes activar confirmación de cuenta si quieres
