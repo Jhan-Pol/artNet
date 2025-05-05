@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using artNet.Infraestructure;
 
@@ -11,9 +12,11 @@ using artNet.Infraestructure;
 namespace artNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250504232724_UpdateMigration2")]
+    partial class UpdateMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +32,7 @@ namespace artNet.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -38,14 +42,17 @@ namespace artNet.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("age")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("city")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("country")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -55,6 +62,7 @@ namespace artNet.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("phone")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -63,7 +71,7 @@ namespace artNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Artistas");
+                    b.ToTable("Artista");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -268,13 +276,17 @@ namespace artNet.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("artNet.Domain.Entities.Mural.Mural", b =>
+            modelBuilder.Entity("Mural", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ArtistaId")
+                    b.Property<string>("ArtistaId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid?>("ArtistaId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Ciudad")
@@ -300,7 +312,9 @@ namespace artNet.Migrations
 
                     b.HasIndex("ArtistaId");
 
-                    b.ToTable("Murales");
+                    b.HasIndex("ArtistaId1");
+
+                    b.ToTable("Mural");
                 });
 
             modelBuilder.Entity("artNet.Domain.Entities.User.User", b =>
@@ -500,20 +514,24 @@ namespace artNet.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("artNet.Domain.Entities.Mural.Mural", b =>
+            modelBuilder.Entity("Mural", b =>
                 {
-                    b.HasOne("Artista", "Artista")
-                        .WithMany("Murales")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Artista")
+                        .WithMany()
                         .HasForeignKey("ArtistaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Artista", null)
+                        .WithMany("Murales")
+                        .HasForeignKey("ArtistaId1");
 
                     b.Navigation("Artista");
                 });
 
             modelBuilder.Entity("artNet.Domain.entities.Reaccion", b =>
                 {
-                    b.HasOne("artNet.Domain.Entities.Mural.Mural", "Mural")
+                    b.HasOne("Mural", "Mural")
                         .WithMany()
                         .HasForeignKey("MuralId")
                         .OnDelete(DeleteBehavior.Cascade)

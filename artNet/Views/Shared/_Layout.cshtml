@@ -31,6 +31,17 @@
                                 <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                             </form>
                         </li>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Artista"))
+                       
+                        {
+                            <li>
+                                <a asp-action="Create" asp-controller="Murales" class="btn btn-primary">Crear mural</a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Murales" class="btn btn-primary">Feed</a>
+                            </li>
+                            
+                        }
                     </ul>
                 </div>
             </div>

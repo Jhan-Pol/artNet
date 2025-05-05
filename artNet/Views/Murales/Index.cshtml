@@ -1,0 +1,28 @@
+﻿@model IEnumerable<artNet.Models.MuralViewModel>
+
+<h2>Murales</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mural in Model)
+            {
+                <tr>
+                    <td>@mural.Nombre</td>
+                    <td>@mural.Descripcion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay murales para mostrar.</p>
+}

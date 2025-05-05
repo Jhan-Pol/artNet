@@ -70,7 +70,7 @@ namespace artNet
             app.MapControllerRoute(
                 name: "default",
 
-                pattern: "{controller=Account}/{action=SignUp}/{id?}")
+                pattern: "{controller=Account}/{action=Login}/{id?}")
 
                 .WithStaticAssets();
             app.MapRazorPages()

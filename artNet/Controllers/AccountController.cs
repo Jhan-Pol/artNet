@@ -1,4 +1,5 @@
-﻿using artNet.Models;
+﻿using artNet.Infraestructure;
+using artNet.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -43,7 +44,30 @@ namespace artNet.Controllers
                         await _roleManager.CreateAsync(new IdentityRole(model.Role));
                     }
                     await _userManager.AddToRoleAsync(user, model.Role);
+                    // Crear artista si el rol es "Artista"
+                    if (model.Role == "Artista")
+                    {
+                        var nuevoArtista = new Artista
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = model.UserName,
+                            email = model.Email,
+                            LastName = "",
+                            phone = "",
+                            age = "",
+                            city = "",
+                            country = "",
+                            photoUrl = null
+                        };
 
+                        // Necesitas acceso a ApplicationDbContext
+                        using (var scope = HttpContext.RequestServices.CreateScope())
+                        {
+                            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                            context.Artistas.Add(nuevoArtista);
+                            await context.SaveChangesAsync();
+                        }
+                    }
                     // Redirige al Login después del registro
                     return RedirectToAction("Login", "Account");
                 }
