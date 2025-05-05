@@ -41,8 +41,15 @@ public async Task<IActionResult> Index(Guid id) // Add 'id' parameter to the met
 
         private IActionResult Views(IEnumerable<PublicacionesViewModel> viewModel)
         {
-            throw new NotImplementedException();
+            return View("Index", viewModel); // Renderiza la vista Index.cshtml
         }
+
+        private IActionResult Views(PublicacionesViewModel viewModel)
+        {
+            return View("Details", viewModel); // Renderiza la vista Details.cshtml
+        }
+
+
 
         public async Task<IActionResult> Details(Guid id)
         {

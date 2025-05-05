@@ -69,12 +69,13 @@ namespace artNet
                 pattern: "{controller=Account}/{action=SignUp}/{id?}")
 
                 .WithStaticAssets();
+
             app.MapRazorPages()
                .WithStaticAssets();
 
             app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Publicaciones}/{action=Index}/{id?}");
+            name: "Publicaciones",
+            pattern: "{controller=Publicaciones}/{action=Index}/{id?}");
 
             app.Run();
         }
