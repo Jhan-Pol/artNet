@@ -1,11 +1,13 @@
-﻿using artNet.Domain.Entities;
-using artNet.Domain.Entities.Mural;
+﻿using artNet.Domain.Entities.Mural;
+using artNet.Domain.Entities;
 using artNet.Infraestructure;
 using artNet.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using artNet.Services.Interfaces;
 
 namespace artNet.Services
 {
@@ -18,9 +20,9 @@ namespace artNet.Services
             _context = context;
         }
 
-        public async Task<bool> CrearMuralAsync(MuralViewModel model, string userEmail)
+        public async Task<bool> CrearMuralAsync(MuralViewModel model, string userEmail, IFormFile imagen)
         {
-            if (model == null || string.IsNullOrEmpty(userEmail))
+            if (model == null || string.IsNullOrEmpty(userEmail) || imagen == null)
             {
                 return false;
             }
@@ -31,8 +33,20 @@ namespace artNet.Services
 
             if (artista == null)
             {
+                Console.WriteLine("no");
                 return false;
             }
+
+            // Guardar el archivo de imagen en el servidor
+            var imagenPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", imagen.FileName);
+
+            using (var stream = new FileStream(imagenPath, FileMode.Create))
+            {
+                await imagen.CopyToAsync(stream);
+            }
+
+            // Obtener la URL relativa de la imagen
+            var imagenUrl = $"/images/{imagen.FileName}";
 
             var mural = new Mural
             {
@@ -40,9 +54,9 @@ namespace artNet.Services
                 Titulo = model.Nombre,
                 Descripcion = model.Descripcion,
                 Ciudad = model.Ciudad,
-                ImagenUrl = model.UrlImagen, // Esto mantiene la misma lógica
+                ImagenUrl = imagenUrl,  // Guardar la URL de la imagen
                 FechaCreacion = DateTime.UtcNow,
-                ArtistaId = artista.Id // Esto también mantiene la misma lógica
+                ArtistaId = artista.Id
             };
 
             _context.Murales.Add(mural);
@@ -50,5 +64,7 @@ namespace artNet.Services
 
             return true;
         }
+
+
     }
 }

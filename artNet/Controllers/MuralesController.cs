@@ -1,23 +1,29 @@
 ﻿using artNet.Domain.Entities.Mural;
 using artNet.Domain.Entities; // Artista
-using artNet.Infraestructure;
 using artNet.Models;
 using artNet.Services; // Importa el servicio
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.IO;
+using artNet.Infraestructure;
+using artNet.Services.Interfaces;
 
 public class MuralesController : Controller
 {
     private readonly ApplicationDbContext _context;
     private readonly IMuralService _muralService;
+    private readonly IWebHostEnvironment _hostEnvironment;
 
-    // Inyección de dependencia del servicio
-    public MuralesController(ApplicationDbContext context, IMuralService muralService)
+    // Inyección de dependencia del servicio y IWebHostEnvironment
+    public MuralesController(ApplicationDbContext context, IMuralService muralService, IWebHostEnvironment hostEnvironment)
     {
         _context = context;
         _muralService = muralService;
+        _hostEnvironment = hostEnvironment;
     }
 
     // Visible para todos los usuarios
@@ -29,7 +35,8 @@ public class MuralesController : Controller
             {
                 Id = m.Id,
                 Nombre = m.Titulo,
-                Descripcion = m.Descripcion
+                Descripcion = m.Descripcion,
+                UrlImagen = m.ImagenUrl
             })
             .ToListAsync();
 
@@ -61,7 +68,7 @@ public class MuralesController : Controller
             }
 
             // Llamar al servicio para crear el mural
-            bool success = await _muralService.CrearMuralAsync(model, userEmail);
+            bool success = await _muralService.CrearMuralAsync(model, userEmail, model.Imagen);
 
             if (success)
             {
@@ -76,4 +83,6 @@ public class MuralesController : Controller
 
         return View(model);
     }
+
+
 }

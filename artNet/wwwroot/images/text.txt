@@ -1,0 +1,6 @@
+﻿namespace artNet.wwwroot.images
+{
+    public class text
+    {
+    }
+}

@@ -17,6 +17,16 @@
                 <tr>
                     <td>@mural.Nombre</td>
                     <td>@mural.Descripcion</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(mural.UrlImagen))
+                        {
+                            <img src="@mural.UrlImagen" alt="Imagen del mural" style="max-width: 150px; max-height: 150px;" />
+                        }
+                        else
+                        {
+                            <span>Sin imagen</span>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>

@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 using artNet.Services;
+using artNet.Services.Interfaces;
 
 namespace artNet
 {
@@ -43,7 +44,7 @@ namespace artNet
                 options.SlidingExpiration = true; // Opcional: renueva si hay actividad
             });
 
-
+            
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

@@ -15,8 +15,10 @@ namespace artNet.Models
         [Required]
         public string Ciudad { get; set; }
 
-        [Required]
-        public string UrlImagen { get; set; }
+
+        public string? UrlImagen { get; set; } // Opcional, porque se llena desde el backend
+
+        public IFormFile Imagen { get; set; }
     }
 
 }
