@@ -36,6 +36,7 @@ public class MuralesController : Controller
                 Id = m.Id,
                 Nombre = m.Titulo,
                 Descripcion = m.Descripcion,
+                Ciudad = m.Ciudad,
                 UrlImagen = m.ImagenUrl
             })
             .ToListAsync();

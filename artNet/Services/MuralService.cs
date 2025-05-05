@@ -65,6 +65,19 @@ namespace artNet.Services
             return true;
         }
 
+        public async Task<MuralViewModel?> ObtenerMuralPorIdAsync(Guid id)
+        {
+            var mural = await _context.Murales.FirstOrDefaultAsync(m => m.Id == id);
+            if (mural == null) return null;
 
+            return new MuralViewModel
+            {
+                Id = mural.Id,
+                Nombre = mural.Titulo,
+                Descripcion = mural.Descripcion,
+                Ciudad = mural.Ciudad,
+                UrlImagen = mural.ImagenUrl
+            };
+        }
     }
 }
