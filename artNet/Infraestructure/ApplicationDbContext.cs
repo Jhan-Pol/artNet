@@ -22,11 +22,11 @@ namespace artNet.Infraestructure
         {
 
         }
-        public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<Admin> Admin { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Admin> Administradores { get; set; }
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Mural> Murales { get; set; }
-        public DbSet<Reaccion> Reaccion { get; set; }
+        public DbSet<Reaccion> Reacciones { get; set; }
         public DbSet<User> User { get; set; }
     }
 }

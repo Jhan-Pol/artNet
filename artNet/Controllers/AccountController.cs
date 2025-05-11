@@ -1,4 +1,5 @@
-﻿using artNet.Infraestructure;
+﻿using artNet.Domain.entities;
+using artNet.Infraestructure;
 using artNet.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,32 +44,65 @@ namespace artNet.Controllers
                     {
                         await _roleManager.CreateAsync(new IdentityRole(model.Role));
                     }
-                    await _userManager.AddToRoleAsync(user, model.Role);
-                    // Crear artista si el rol es "Artista"
-                    if (model.Role == "Artista")
-                    {
-                        var nuevoArtista = new Artista
-                        {
-                            Id = Guid.NewGuid(),
-                            Name = model.UserName,
-                            email = model.Email,
-                            LastName = "",
-                            phone = "",
-                            age = "",
-                            city = "",
-                            country = "",
-                            photoUrl = null
-                        };
 
-                        // Necesitas acceso a ApplicationDbContext
-                        using (var scope = HttpContext.RequestServices.CreateScope())
+                    await _userManager.AddToRoleAsync(user, model.Role);
+
+                    using (var scope = HttpContext.RequestServices.CreateScope())
+                    {
+                        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                        if (model.Role == "Artista")
                         {
-                            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                            var nuevoArtista = new Artista
+                            {
+                                Id = Guid.NewGuid(),
+                                Name = model.UserName,
+                                LastName = "",
+                                photoUrl = null,
+                                age = "",
+                                city = "",
+                                country = "",
+                                phone = "",
+                                email = model.Email
+                            };
                             context.Artistas.Add(nuevoArtista);
-                            await context.SaveChangesAsync();
                         }
+                        else if (model.Role == "Usuario")
+                        {
+                            var nuevoUsuario = new Usuario
+                            {
+                                Id = Guid.NewGuid(),
+                                Name = model.UserName,
+                                LastName = "",
+                                photoUrl = null,
+                                age = "",
+                                city = "",
+                                country = "",
+                                phone = "",
+                                email = model.Email
+                            };
+                            context.Usuarios.Add(nuevoUsuario);
+                        }
+                        else if (model.Role == "Administrador")
+                        {
+                            var nuevoAdmin = new Admin
+                            {
+                                Id = Guid.NewGuid(),
+                                Name = model.UserName,
+                                LastName = "",
+                                photoUrl = null,
+                                age = 0,
+                                city = "",
+                                country = "",
+                                phone = "",
+                                email = model.Email
+                            };
+                            context.Administradores.Add(nuevoAdmin);
+                        }
+
+                        await context.SaveChangesAsync();
                     }
-                    // Redirige al Login después del registro
+
                     return RedirectToAction("Login", "Account");
                 }
 
@@ -80,6 +114,7 @@ namespace artNet.Controllers
 
             return View(model);
         }
+
 
         [HttpGet]
         public IActionResult Login()
