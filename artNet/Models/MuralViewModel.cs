@@ -18,6 +18,7 @@ namespace artNet.Models
 
         public string? UrlImagen { get; set; } // Opcional, porque se llena desde el backend
 
+        [Required]
         public IFormFile Imagen { get; set; }
     }
 

@@ -1,45 +1,86 @@
-﻿@model IEnumerable<artNet.Models.MuralViewModel>
+﻿ @model IEnumerable<artNet.Models.MuralViewModel>
+    @{
+        Layout = null;
+    }
+    @{
+        ViewData["Title"] = "Murales";
+    }
 
-@{
-    ViewData["Title"] = "Murales";
-}
-
-<h2>Murales</h2>
-
-@if (Model.Any())
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Imagen</th>
-                <th>Título</th>
-                <th>Descripción</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var mural in Model)
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Feed</title>
+        <link href="~/css/Feed.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    </head>
+    <body>
+        <div class="principal-container">
+        <div class="explorer-container">
+            <h1 class="figura">ArtNet</h1>
+            <div class="d-flex align-items-center" style="font-size: 20px">
+                <i class="bi bi-house-door-fill me-2"></i> Inicio
+            </div>
+            
+            <div class="d-flex align-items-center" style="font-size: 20px">
+                <i class="bi bi-search me-2"></i> Buscar
+            </div>
+            <div class="nav-item" style="font-size: 20px">
+                <i class="bi bi-person-circle"></i> Perfil
+            </div>
+        </div>
+        <div class="images-container">
+            @if (Model.Any())
             {
-                <tr>
-                    <td>
-                        <img src="@mural.UrlImagen"
-                             alt="@mural.Nombre"
-                             width="100"
-                             class="img-thumbnail"
-                             style="cursor:pointer;"
-                             data-id="@mural.Id"
-                             onclick="mostrarDetalles(this)" />
-                    </td>
-                    <td>@mural.Nombre</td>
-                    <td>@mural.Descripcion</td>
-                </tr>
+                @foreach (var mural in Model)
+                    {
+
+                    <img src="@mural.UrlImagen"
+                        alt="@mural.Nombre"
+                        class="feed-image"
+                        style="cursor:pointer; border: solid 1px #ffffff;"
+                        data-id="@mural.Id"
+                        onclick="mostrarDetalles(this)" />
+                    }
+
             }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No hay murales para mostrar.</p>
-}
+            else
+            {
+               <p>No hay murales para mostrar.</p>
+            }
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function mostrarDetalles(img) {
+            const id = img.getAttribute("data-id");
+
+            fetch(`/Details/GetDetails?id=${id}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("No se pudo cargar el mural");
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById("modalImagen").src = data.urlImagen;
+                    document.getElementById("modalNombre").innerText = data.nombre;
+                    document.getElementById("modalDescripcion").innerText = data.descripcion;
+                    document.getElementById("modalCiudad").innerText = data.ciudad;
+
+                    
+                    const modal = new bootstrap.Modal(document.getElementById('detalleModal'));
+                    modal.show();
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Error al cargar detalles del mural.");
+                });
+        }
+    </script>
+    </body>
+</html>
 
 <!-- Modal para detalles -->
 <div class="modal fade" id="detalleModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -61,28 +102,4 @@ else
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        function mostrarDetalles(img) {
-            const id = img.getAttribute("data-id");
 
-            fetch(`/Details/GetDetails?id=${id}`)
-                .then(response => {
-                    if (!response.ok) throw new Error("No se pudo cargar el mural");
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById("modalImagen").src = data.urlImagen;
-                    document.getElementById("modalNombre").innerText = data.nombre;
-                    document.getElementById("modalDescripcion").innerText = data.descripcion;
-                    document.getElementById("modalCiudad").innerText = data.ciudad;
-
-                    $('#detalleModal').modal('show');
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("Error al cargar detalles del mural.");
-                });
-        }
-    </script>
-}
