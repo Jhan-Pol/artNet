@@ -74,8 +74,8 @@ namespace artNet
             app.MapControllerRoute(
                 name: "default",
 
-                pattern: "{controller=Account}/{action=Login}/{id?}")
-
+              //  pattern: "{controller=Account}/{action=Login}/{id?}")
+              pattern: "{controller=Profile}/{action=ProfileArtista}/{id?}")
                 .WithStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();

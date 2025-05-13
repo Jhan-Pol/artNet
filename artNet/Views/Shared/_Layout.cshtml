@@ -42,6 +42,19 @@
                         <li>
                             <a asp-action="Index" asp-controller="Murales" class="btn btn-primary">Feed</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Artista"))
+                        {
+                        <li>
+                            <a asp-action="ProfileArtista" asp-controller="Profile" class="btn btn-primary">Perfil</a>
+                        </li>
+                        }
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Usuario"))
+                        {
+                            <li>
+                                <a asp-action="ProfileUsuario" asp-controller="Profile" class="btn btn-primary">Perfil</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
