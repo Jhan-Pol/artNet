@@ -39,6 +39,16 @@
                             </li>
                             
                         }
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
+                        {
+                            <li class="flex-column">
+                                <div>
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <a asp-action="AdminProfile" asp-controller="Home" class="btn btn-primary">Admin Profile</a>
+                            </li>
+                        }
                         <li>
                             <a asp-action="Index" asp-controller="Murales" class="btn btn-primary">Feed</a>
                         </li>
