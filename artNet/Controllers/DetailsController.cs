@@ -1,7 +1,9 @@
-﻿using artNet.Models;
+﻿using artNet.Infraestructure;
+using artNet.Models;
 using artNet.Services;
 using artNet.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -11,11 +13,13 @@ namespace artNet.Controllers
     {
         private readonly IMuralService _muralService;
         private readonly IComentarioService _comentarioService;
+        private readonly ApplicationDbContext _context;
 
-        public DetailsController(IMuralService muralService, IComentarioService comentarioService)
+        public DetailsController(IMuralService muralService, IComentarioService comentarioService, ApplicationDbContext context)
         {
             _muralService = muralService;
             _comentarioService = comentarioService;
+            _context = context;
         }
 
         [HttpGet]
@@ -39,6 +43,28 @@ namespace artNet.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AgregarComentario([FromBody] ComentarioViewModels model)
+        {
+            try
+            {
+                string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId == null)
+                {
+                    return Unauthorized("No se pudo obtener el ID del usuario autenticado.");
+                }
+
+                await _comentarioService.AgregarComentarioAsync(userId, model);
+
+                var comentarios = await _comentarioService.ObtenerComentariosPorMuralAsync(model.MuralId);
+                return Json(comentarios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al agregar comentario: {ex.Message}");
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> DetailsExit()

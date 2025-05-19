@@ -64,42 +64,72 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        let muralIdActual = null;
+
         function mostrarDetalles(img) {
             const id = img.getAttribute("data-id");
+            muralIdActual = id;
 
             fetch(`/Details/GetDetails?id=${id}`)
-                .then(response => {
-                    if (!response.ok) throw new Error("No se pudo cargar el mural");
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
                     document.getElementById("modalImagen").src = data.urlImagen;
                     document.getElementById("modalNombre").innerText = data.nombre;
                     document.getElementById("modalDescripcion").innerText = data.descripcion;
                     document.getElementById("modalCiudad").innerText = data.ciudad;
 
-                // Limpiar comentarios anteriores
-            const comentariosLista = document.getElementById("comentariosLista");
-            comentariosLista.innerHTML = "";
+                    actualizarComentarios(data.comentarios);
 
-            if (data.comentarios && data.comentarios.length > 0) {
-                data.comentarios.forEach(comentario => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `<strong>${comentario.usuario}</strong>: ${comentario.contenido}`;
-                    comentariosLista.appendChild(li);
-                });
-            } else {
-                comentariosLista.innerHTML = "<li>No hay comentarios.</li>";
-            }
                     const modal = new bootstrap.Modal(document.getElementById('detalleModal'));
                     modal.show();
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("Error al cargar detalles del mural.");
                 });
         }
+
+        function actualizarComentarios(comentarios) {
+            const lista = document.getElementById("comentariosLista");
+            lista.innerHTML = "";
+
+            if (comentarios.length === 0) {
+                lista.innerHTML = "<li>No hay comentarios.</li>";
+            } else {
+                comentarios.forEach(c => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<strong>${c.usuario}</strong> (${new Date(c.fecha).toLocaleString()}): ${c.contenido}`;
+                    lista.appendChild(li);
+                });
+            }
+        }
+
+        function enviarComentario() {
+            const texto = document.getElementById("comentarioTexto").value.trim();
+            if (!texto) return alert("Comentario vacío");
+
+            fetch('/Details/AgregarComentario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    muralId: muralIdActual,
+                    contenido: texto
+                })
+            })
+            .then(resp => {
+                if (!resp.ok) throw new Error("No se pudo guardar el comentario");
+                return resp.json();
+            })
+            .then(comentariosActualizados => {
+                document.getElementById("comentarioTexto").value = "";
+                actualizarComentarios(comentariosActualizados);
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Hubo un problema al guardar el comentario.");
+            });
+        }
     </script>
+
+
     </body>
 </html>
 
@@ -124,6 +154,12 @@
                         <!-- Comentarios se insertarán aquí por JavaScript -->
                     </ul>
                 </div>
+                <div class="mt-3">
+                    <h5>Agregar Comentario</h5>
+                    <textarea id="comentarioTexto" class="form-control mb-2" placeholder="Escribe tu comentario aquí"></textarea>
+                    <button class="btn btn-primary" onclick="enviarComentario()">Publicar</button>
+                </div>
+
             </div>
         </div>
     </div>

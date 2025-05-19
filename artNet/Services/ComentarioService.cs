@@ -15,12 +15,12 @@ namespace artNet.Services
             _context = context;
         }
 
-        public async Task AgregarComentarioAsync(int userId, ComentarioViewModels model)
+        public async Task AgregarComentarioAsync(string userId, ComentarioViewModels model)
         {
             var comentario = new Comentario
             {
                 Contenido = model.Contenido,
-                MuralId = model.MuralId, // Necesita estar en el modelo (ver nota abajo)
+                MuralId = model.MuralId,
                 UsuarioId = userId,
                 Fecha = DateTime.UtcNow
             };
@@ -28,6 +28,7 @@ namespace artNet.Services
             _context.Comentarios.Add(comentario);
             await _context.SaveChangesAsync();
         }
+
 
         public async Task<List<ComentarioViewModels>> ObtenerComentariosPorMuralAsync(Guid muralId)
         {
@@ -38,7 +39,7 @@ namespace artNet.Services
                 .Select(c => new ComentarioViewModels
                 {
                     Contenido = c.Contenido,
-                    Usuario = c.Usuario.Username,  // ← solo username, no entidad
+                    Usuario = c.Usuario.UserName,  // ← solo username, no entidad
                     Fecha = c.Fecha
                 })
                 .ToListAsync();

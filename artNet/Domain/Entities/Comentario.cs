@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using artNet.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace artNet.Domain.Entities
 {
@@ -16,13 +17,13 @@ namespace artNet.Domain.Entities
         [Required]
         public DateTime Fecha { get; set; } = DateTime.UtcNow;
 
-        // 🔗 Relación con User (modelo de autenticación)
+        // Relación con IdentityUser
         [Required]
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; }
 
-        public User Usuario { get; set; }
+        [ForeignKey("UsuarioId")]
+        public IdentityUser Usuario { get; set; }
 
-        // 🔗 Relación con Mural
         [Required]
         public Guid MuralId { get; set; }
 
