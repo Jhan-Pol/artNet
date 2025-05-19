@@ -1,4 +1,4 @@
-﻿using artNet.Domain.entities;
+﻿using artNet.Domain.Entities;
 using artNet.Infraestructure;
 using artNet.Models;
 using Microsoft.AspNetCore.Identity;

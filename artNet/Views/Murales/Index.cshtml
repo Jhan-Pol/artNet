@@ -78,7 +78,19 @@
                     document.getElementById("modalDescripcion").innerText = data.descripcion;
                     document.getElementById("modalCiudad").innerText = data.ciudad;
 
-                    
+                // Limpiar comentarios anteriores
+            const comentariosLista = document.getElementById("comentariosLista");
+            comentariosLista.innerHTML = "";
+
+            if (data.comentarios && data.comentarios.length > 0) {
+                data.comentarios.forEach(comentario => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<strong>${comentario.usuario}</strong>: ${comentario.contenido}`;
+                    comentariosLista.appendChild(li);
+                });
+            } else {
+                comentariosLista.innerHTML = "<li>No hay comentarios.</li>";
+            }
                     const modal = new bootstrap.Modal(document.getElementById('detalleModal'));
                     modal.show();
                 })
@@ -106,6 +118,12 @@
                 <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
                 <p><strong>Descripción:</strong> <span id="modalDescripcion"></span></p>
                 <p><strong>Ciudad:</strong> <span id="modalCiudad"></span></p>
+                <div id="comentariosContainer">
+                    <h5>Comentarios:</h5>
+                    <ul id="comentariosLista" class="list-unstyled">
+                        <!-- Comentarios se insertarán aquí por JavaScript -->
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

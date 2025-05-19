@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace artNet.Domain.entities
+namespace artNet.Domain.Entities
 {
     public class Usuario
     {

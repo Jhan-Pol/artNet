@@ -18,6 +18,8 @@ namespace artNet.Models
 
         public string? UrlImagen { get; set; } // Opcional, porque se llena desde el backend
 
+        public List<ComentarioViewModels> Comentarios { get; set; } = new();
+
         [Required]
         public IFormFile Imagen { get; set; }
     }

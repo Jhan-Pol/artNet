@@ -1,5 +1,4 @@
-﻿using artNet.Domain.Entities.Mural;
-using artNet.Domain.Entities;
+﻿using artNet.Domain.Entities;
 using artNet.Infraestructure;
 using artNet.Models;
 using Microsoft.EntityFrameworkCore;
@@ -67,17 +66,19 @@ namespace artNet.Services
 
         public async Task<MuralViewModel?> ObtenerMuralPorIdAsync(Guid id)
         {
-            var mural = await _context.Murales.FirstOrDefaultAsync(m => m.Id == id);
-            if (mural == null) return null;
+            var mural = await _context.Murales
+        .Where(m => m.Id == id)
+        .Select(m => new MuralViewModel
+        {
+            Id = m.Id,
+            Nombre = m.Titulo,
+            Ciudad = m.Ciudad,
+            Descripcion = m.Descripcion,
+            UrlImagen = m.ImagenUrl
+        })
+        .FirstOrDefaultAsync();
 
-            return new MuralViewModel
-            {
-                Id = mural.Id,
-                Nombre = mural.Titulo,
-                Descripcion = mural.Descripcion,
-                Ciudad = mural.Ciudad,
-                UrlImagen = mural.ImagenUrl
-            };
+            return mural;
         }
     }
 }

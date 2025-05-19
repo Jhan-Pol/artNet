@@ -1,4 +1,4 @@
-﻿using artNet.Domain.entities;
+﻿using artNet.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -8,10 +8,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
 using System.Reflection;
 using System.Collections.Generic;
-using artNet.Domain.Entities.User;
+
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using artNet.Domain.Entities.Mural;
+
 
 namespace artNet.Infraestructure
 {
@@ -28,5 +28,6 @@ namespace artNet.Infraestructure
         public DbSet<Mural> Murales { get; set; }
         public DbSet<Reaccion> Reacciones { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Comentario> Comentarios { get; set; }
     }
 }

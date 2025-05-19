@@ -1,5 +1,4 @@
-﻿using artNet.Domain.Entities.Mural;
-using artNet.Domain.Entities; // Artista
+﻿using artNet.Domain.Entities; // Artista
 using artNet.Models;
 using artNet.Services; // Importa el servicio
 using Microsoft.AspNetCore.Authorization;

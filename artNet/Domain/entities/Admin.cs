@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace artNet.Domain.entities
+namespace artNet.Domain.Entities
 {
     public class Admin
     {

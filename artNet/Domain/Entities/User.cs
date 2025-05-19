@@ -1,4 +1,4 @@
-﻿namespace artNet.Domain.Entities.User
+﻿namespace artNet.Domain.Entities
 {
     public class User
     {

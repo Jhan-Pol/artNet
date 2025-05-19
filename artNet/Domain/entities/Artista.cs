@@ -1,4 +1,4 @@
-using artNet.Domain.Entities.Mural;
+using artNet.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 public class Artista

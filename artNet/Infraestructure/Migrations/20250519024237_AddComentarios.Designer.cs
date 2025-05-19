@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using artNet.Infraestructure;
 
@@ -11,9 +12,11 @@ using artNet.Infraestructure;
 namespace artNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250519024237_AddComentarios")]
+    partial class AddComentarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -328,6 +331,9 @@ namespace artNet.Migrations
                     b.Property<Guid>("MuralId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("UsernameId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
@@ -335,7 +341,7 @@ namespace artNet.Migrations
 
                     b.HasIndex("MuralId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("UsernameId");
 
                     b.ToTable("Comentarios");
                 });
@@ -527,15 +533,15 @@ namespace artNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("artNet.Domain.Entities.User", "Usuario")
+                    b.HasOne("artNet.Domain.Entities.User", "Username")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("UsernameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Mural");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Username");
                 });
 
             modelBuilder.Entity("artNet.Domain.Entities.Mural", b =>
