@@ -80,5 +80,26 @@ namespace artNet.Services
 
             return mural;
         }
+        public async Task<List<MuralViewModel>> ObtenerMuralesConLikes(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            if (user == null) return new List<MuralViewModel>();
+
+            var murales = await _context.Murales
+                .Select(m => new MuralViewModel
+                {
+                    Id = m.Id,
+                    Nombre = m.Titulo,
+                    Ciudad = m.Ciudad,
+                    Descripcion = m.Descripcion,
+                    UrlImagen = m.ImagenUrl,
+                    UsuarioYaDioLike = m.Likes.Any(l => l.UserId == user.Id),
+                    CantidadLikes = m.Likes.Count
+                })
+                .ToListAsync();
+
+            return murales;
+        }
+
     }
 }

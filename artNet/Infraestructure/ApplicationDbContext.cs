@@ -27,7 +27,8 @@ namespace artNet.Infraestructure
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Mural> Murales { get; set; }
         public DbSet<Reaccion> Reacciones { get; set; }
-        public DbSet<User> User { get; set; }
+        //public DbSet<User> User { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }
+        public DbSet<Like> Likes { get; set; }
     }
 }

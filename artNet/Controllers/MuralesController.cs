@@ -29,18 +29,10 @@ public class MuralesController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var murales = await _context.Murales
-            .Select(m => new MuralViewModel
-            {
-                Id = m.Id,
-                Nombre = m.Titulo,
-                Descripcion = m.Descripcion,
-                Ciudad = m.Ciudad,
-                UrlImagen = m.ImagenUrl
-            })
-            .ToListAsync();
-
+        string username = User.Identity.IsAuthenticated ? User.Identity.Name : null;
+        var murales = await _muralService.ObtenerMuralesConLikes(username);
         return View(murales);
+
     }
 
     // Solo para artistas autenticados

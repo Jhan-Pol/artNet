@@ -41,6 +41,7 @@ namespace artNet.Controllers
                 Console.WriteLine("Error al obtener detalles: " + ex.Message);
                 return StatusCode(500, $"Error interno: {ex.Message}");
             }
+
         }
 
         [HttpPost]

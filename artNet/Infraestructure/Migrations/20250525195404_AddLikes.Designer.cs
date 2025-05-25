@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using artNet.Infraestructure;
 
@@ -11,9 +12,11 @@ using artNet.Infraestructure;
 namespace artNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250525195404_AddLikes")]
+    partial class AddLikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -352,13 +355,11 @@ namespace artNet.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MuralId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Likes");
                 });
@@ -420,6 +421,31 @@ namespace artNet.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Reacciones");
+                });
+
+            modelBuilder.Entity("artNet.Domain.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("artNet.Domain.Entities.Usuario", b =>
@@ -539,20 +565,12 @@ namespace artNet.Migrations
             modelBuilder.Entity("artNet.Domain.Entities.Like", b =>
                 {
                     b.HasOne("artNet.Domain.Entities.Mural", "Mural")
-                        .WithMany("Likes")
+                        .WithMany()
                         .HasForeignKey("MuralId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Mural");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("artNet.Domain.Entities.Mural", b =>
@@ -588,11 +606,6 @@ namespace artNet.Migrations
             modelBuilder.Entity("Artista", b =>
                 {
                     b.Navigation("Murales");
-                });
-
-            modelBuilder.Entity("artNet.Domain.Entities.Mural", b =>
-                {
-                    b.Navigation("Likes");
                 });
 #pragma warning restore 612, 618
         }

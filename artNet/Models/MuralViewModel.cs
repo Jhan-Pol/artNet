@@ -22,6 +22,8 @@ namespace artNet.Models
 
         [Required]
         public IFormFile Imagen { get; set; }
+        public bool UsuarioYaDioLike { get; set; }
+        public int CantidadLikes { get; set; }
     }
 
 }

@@ -26,6 +26,8 @@ namespace artNet
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IMuralService, MuralService>();
             builder.Services.AddScoped<IComentarioService, ComentarioService>();
+            builder.Services.AddScoped<ILikeService, LikeService>();
+
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>

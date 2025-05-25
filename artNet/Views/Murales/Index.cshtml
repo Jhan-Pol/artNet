@@ -43,16 +43,28 @@
                         data-id="@mural.Id"
                         onclick="mostrarDetalles(this)" />
 
+                    
                     <!-- Iconos de corazon y comentarios -->
                     <div class="icons-feed">
-                        <i class="bi bi-heart" style="font-size: 2rem; color: #e74c3c; cursor: pointer;"></i>
-                        <i class="bi bi-chat" style="font-size: 2rem; color: #007bff; cursor: pointer;"></i>
-
+                        @if (mural.UsuarioYaDioLike)
+                        {
+                            <i class="bi bi-heart-fill like-icon"
+                               style="font-size: 2rem; color: #e74c3c; cursor: pointer;"
+                               data-id="@mural.Id"
+                               onclick="toggleLike(this)"></i>
+                        }
+                        else
+                        {
+                            <i class="bi bi-heart like-icon"
+                               style="font-size: 2rem; color: #e74c3c; cursor: pointer;"
+                               data-id="@mural.Id"
+                               onclick="toggleLike(this)"></i>
+                        }
+                        <span class="ms-2" style="font-size: 1.2rem; color: aliceblue;">@mural.CantidadLikes</span>
+                        
                     </div>
 
                     }
-                
-
             }
             else
             {
@@ -127,6 +139,36 @@
                 alert("Hubo un problema al guardar el comentario.");
             });
         }
+
+        function toggleLike(element) {
+            const muralId = element.getAttribute("data-id");
+
+            fetch('/Like/Toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ muralId: muralId })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Error al dar like");
+                return response.json();
+            })
+            .then(data => {
+                if (data.isLiked) {
+                    element.classList.remove("bi-heart");
+                    element.classList.add("bi-heart-fill");
+                } else {
+                    element.classList.remove("bi-heart-fill");
+                    element.classList.add("bi-heart");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Debe iniciar sesión para dar like.");
+            });
+        }
+
     </script>
 
 
