@@ -1,0 +1,68 @@
+﻿@{
+    Layout = null;
+}
+@model SignUpViewModel;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Registrarse</title>
+    <link href="~/css/Account.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&family=Miltonian+Tattoo&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quattrocento:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container-description-artNet">
+        <h1 class="figura">ArtNet</h1>
+        <div class="description-artNet">
+            <h3>
+                <em>
+                    🎨 Explora el arte urbano 🌆
+
+                    Descubre murales de distintas ciudades, comenta, reacciona y, si eres artista, comparte tus propias obras.
+
+                    ¡Únete a la comunidad! ✨
+                </em>
+            </h3>
+            <div style="font-size:30px;">--------------------------------------</div>
+        </div>
+    </div>
+
+    <div class="form_container">
+        <div class="tittle-form" style="margin-top : 30px">Registrarse</div>
+        <form class="form" style= "gap: 20px" method="post" asp-action="SignUp">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+            <input class="input-form" type="text" id="UserName" name="UserName" placeholder="Apodo" required />
+
+            <input class="input-form" type="email" id="Email" name="Email" aria-describedby="emailHelp" placeholder="Correo" required />
+
+            <input type="password" class="input-form" id="Password" name="Password" placeholder="Contraseña" required />
+
+            <input type="password" class="input-form" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirmar Contraseña" required />
+
+            <span style="font-size: 25px; font-family: 'Times New Roman', Times, serif;">¿Con qué rol te vincularás? :)</span>
+            <select class="select-rol" name="Role" aria-label="Seleccionar rol">
+                <option value="Usuario" selected>Usuario</option>
+                <option value="Artista">Artista</option>
+                <option value="Administrador">Administrador</option>
+            </select>
+
+            <button type="submit" class="button-form">Registrarse</button>
+            <a href="/Account/Login" class="link-form">¿Ya tienes cuenta? Inicia sesión</a>
+        </form>
+    </div>
+</body>
+</html>

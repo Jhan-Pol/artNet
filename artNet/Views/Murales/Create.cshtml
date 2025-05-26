@@ -1,0 +1,83 @@
+﻿@model artNet.Models.MuralViewModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Crear Mural";
+}
+<!DOCTYPE html>
+<html lang="es" >
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - artNet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/Feed.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/artNet.styles.css" asp-append-version="true" />
+</head>
+<body >
+    <div style=" color: aliceblue; flex-direction:column; padding-top:50px" class="principal-container">
+        
+        <form asp-action="Create" method="post" enctype="multipart/form-data" style="border:1px solid #fff; border-radius: 10px; padding:70px">
+            <h2>Crear Mural</h2>
+            <div class="form-group mb-3">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <textarea asp-for="Descripcion" class="form-control"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Ciudad" class="control-label"></label>
+                <select asp-for="Ciudad" class="form-control">
+                    <option value="">Seleccione una ciudad</option>
+                    <option value="Cali">Cali</option>
+                    <option value="Bogota">Bogotá</option>
+                </select>
+                <span asp-validation-for="Ciudad" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Imagen" class="control-label"></label>
+                <input asp-for="Imagen" type="file" class="form-control" />
+                <span asp-validation-for="Imagen" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileInput = document.getElementById("Imagen");
+            if (fileInput) {
+                const preview = document.createElement("img");
+                preview.style.maxWidth = "300px";
+                preview.style.marginTop = "10px";
+                fileInput.parentNode.appendChild(preview);
+
+                fileInput.addEventListener("change", function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            preview.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        preview.src = "";
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

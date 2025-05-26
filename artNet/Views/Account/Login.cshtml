@@ -1,12 +1,14 @@
 ﻿@{
     Layout = null;
 }
+
+@model LoginViewModel
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
-    <link href="~/css/login.css" rel="stylesheet" />
+    <title>Iniciar sesión</title>
+    <link href="~/css/Account.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,33 +16,54 @@
 </head>
 <body>
     <div class="container-description-artNet">
-        <h1 class="figura" >ArtNet</h1>
+        <h1 class="figura">ArtNet</h1>
         <div class="description-artNet">
-            <h2 style="font-size: 60px">🔑Bienvenido</h2>
-
+            <h2 style="font-size: 60px">🔑 Bienvenido</h2>
             <h3>
                 <em>
-                    Accede a tu cuenta para explorar murales, interactuar con la 
-                    comunidad y descubrir el arte urbano de Colombia. 🎨✨
+                    Accede a tu cuenta para explorar murales, interactuar con la comunidad y descubrir el arte urbano de Colombia. 🎨✨
                 </em>
             </h3>
             <div style="font-size:30px;">--------------------------------------</div>
         </div>
     </div>
-    <div class="Login">
-        <div class="tittle-form">Iniciar Sesion</div>
-        <form class="form">
- 
-                <input class= "input-form"type="email"  id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=" Correo">
-  
-                <input type="password" class="input-form" id="exampleInputPassword1"   placeholder="Contraseña" >
-        
-            <button type="submit" class="button-form" >Iniciar</button>
 
+    <div class="form_container">
+        <div class="tittle-form">Iniciar Sesión</div>
+        <form class="form" style= "gap: 25px" method="post" asp-action="Login">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            
+            <input class="input-form" asp-for="Email" placeholder="Correo" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            
+
+            
+            <input asp-for="Password" class="input-form" placeholder="Contraseña" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            
+
+            <span style="font-size: 25px; font-family: 'Times New Roman', Times, serif;">¿Con qué rol estás vinculado? :)</span>
+            <select class="select-rol" name="Role" aria-label="Rol" disabled>
+                <option value="Usuario" selected>Usuario</option>
+                <option value="Artista">Artista</option>
+            </select>
+
+            
+
+            <button type="submit" class="button-form">Iniciar sesión</button>
+            <a href="/Account/SignUp" class="link-form">¿Aun no tienes cuenta? Registrate</a>
         </form>
-        <a href="https://www.ejemplo.com">¿Olvidaste tu contraseña?</a>
-        <div style="font-size:30px;">------------------------------</div>
     </div>
-    
 </body>
 </html>
