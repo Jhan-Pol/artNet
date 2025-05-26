@@ -17,12 +17,14 @@ namespace artNet.Services
 
         public async Task AgregarComentarioAsync(string userId, ComentarioViewModels model)
         {
+            var zonaBogota = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+            var fechaColombia = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, zonaBogota);
             var comentario = new Comentario
             {
                 Contenido = model.Contenido,
                 MuralId = model.MuralId,
                 UsuarioId = userId,
-                Fecha = DateTime.UtcNow
+                Fecha = fechaColombia
             };
 
             _context.Comentarios.Add(comentario);

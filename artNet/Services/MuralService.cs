@@ -80,12 +80,19 @@ namespace artNet.Services
 
             return mural;
         }
-        public async Task<List<MuralViewModel>> ObtenerMuralesConLikes(string username)
+        public async Task<List<MuralViewModel>> ObtenerMuralesConLikes(string username, string ciudad = null)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
             if (user == null) return new List<MuralViewModel>();
 
-            var murales = await _context.Murales
+            var query = _context.Murales.AsQueryable();
+
+            if (!string.IsNullOrEmpty(ciudad))
+            {
+                query = query.Where(m => m.Ciudad == ciudad);
+            }
+
+            var murales = await query
                 .Select(m => new MuralViewModel
                 {
                     Id = m.Id,
@@ -100,6 +107,7 @@ namespace artNet.Services
 
             return murales;
         }
+
 
     }
 }

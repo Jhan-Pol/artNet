@@ -27,13 +27,13 @@ public class MuralesController : Controller
 
     // Visible para todos los usuarios
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string ciudad = null)
     {
         string username = User.Identity.IsAuthenticated ? User.Identity.Name : null;
-        var murales = await _muralService.ObtenerMuralesConLikes(username);
+        var murales = await _muralService.ObtenerMuralesConLikes(username, ciudad);
         return View(murales);
-
     }
+
 
     // Solo para artistas autenticados
     [Authorize(Roles = "Artista")]

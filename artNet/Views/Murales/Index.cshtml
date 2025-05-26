@@ -19,52 +19,67 @@
         <div class="principal-container">
         <div class="explorer-container">
             <h1 class="figura">ArtNet</h1>
-            <div class="d-flex align-items-center" style="font-size: 20px">
+            <div class="d-flex align-items-center" style="font-size: 20px; cursor:pointer;" onclick="mostrarTodosMurales()" title="Ir a inicio">
                 <i class="bi bi-house-door-fill me-2"></i> Inicio
             </div>
             
-            <div class="d-flex align-items-center" style="font-size: 20px">
+            <div class="d-flex align-items-center" style="font-size: 20px; cursor:pointer;" onclick="abrirModalCiudad()" title="Filtrar Murales">
                 <i class="bi bi-search me-2"></i> Buscar
             </div>
-            <div class="nav-item" style="font-size: 20px">
+            <div class="nav-item" style="font-size: 20px" title="Perfil">
                 <i class="bi bi-person-circle"></i> Perfil
+            </div>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Artista"))
+
+            {
+
+                <a asp-action="Create" asp-controller="Murales" class="btn btn-success" title="Crear mural" style="font-size: 1 rem; padding: 0.4rem 0.7rem; background-color: aliceblue; color: black;">
+                    <i class="bi bi-plus-lg"></i> Añadir
+                    
+                </a>
+                
+
+            }
+            <!-- Formulario oculto para logout -->
+            <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" style="display:none;"></form>
+
+            <!-- Icono de logout visible -->
+            <div title="Cerrar sesión" onclick="document.getElementById('logoutForm').submit(); return false;" style="color: aliceblue;  font-size: 1.4rem; margin-left: 10px; cursor: pointer">
+                <i class="bi bi-box-arrow-right"></i> Cerrar
             </div>
         </div>
         <div class="images-container">
             @if (Model.Any())
             {
                 @foreach (var mural in Model)
-                    {
+                {
+                    <div class="mural-card">
+                        <img src="@mural.UrlImagen"
+                             alt="@mural.Nombre"
+                             class="feed-image"
+                             style="cursor:pointer; border: solid 1px #ffffff;"
+                             data-id="@mural.Id"
+                             onclick="mostrarDetalles(this)" />
 
-                    <img src="@mural.UrlImagen"
-                        alt="@mural.Nombre"
-                        class="feed-image"
-                        style="cursor:pointer; border: solid 1px #ffffff;"
-                        data-id="@mural.Id"
-                        onclick="mostrarDetalles(this)" />
-
-                    
-                    <!-- Iconos de corazon y comentarios -->
-                    <div class="icons-feed">
-                        @if (mural.UsuarioYaDioLike)
-                        {
-                            <i class="bi bi-heart-fill like-icon"
-                               style="font-size: 2rem; color: #e74c3c; cursor: pointer;"
-                               data-id="@mural.Id"
-                               onclick="toggleLike(this)"></i>
-                        }
-                        else
-                        {
-                            <i class="bi bi-heart like-icon"
-                               style="font-size: 2rem; color: #e74c3c; cursor: pointer;"
-                               data-id="@mural.Id"
-                               onclick="toggleLike(this)"></i>
-                        }
-                        <span class="ms-2" style="font-size: 1.2rem; color: aliceblue;">@mural.CantidadLikes</span>
-                        
+                        <div class="icons-feed">
+                            @if (mural.UsuarioYaDioLike)
+                            {
+                                <i class="bi bi-heart-fill like-icon"
+                                   style="font-size: 2rem; color: #e74c3c; cursor: pointer;"
+                                   data-id="@mural.Id"
+                                   onclick="toggleLike(this)"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-heart like-icon"
+                                   style="font-size: 2rem; color: #e74c3c; cursor: pointer;"
+                                   data-id="@mural.Id"
+                                   onclick="toggleLike(this)"></i>
+                            }
+                            <span class="ms-2" style="font-size: 1.2rem; color: aliceblue;">@mural.CantidadLikes</span>
+                        </div>
                     </div>
-
-                    }
+                }
             }
             else
             {
@@ -88,7 +103,8 @@
                     document.getElementById("modalImagen").src = data.urlImagen;
                     document.getElementById("modalNombre").innerText = data.nombre;
                     document.getElementById("modalDescripcion").innerText = data.descripcion;
-                    document.getElementById("modalCiudad").innerText = data.ciudad;
+                    document.getElementById("modalCiudad").value = data.ciudad;
+
 
                     actualizarComentarios(data.comentarios);
 
@@ -169,6 +185,19 @@
             });
         }
 
+        function abrirModalCiudad() {
+            const modal = new bootstrap.Modal(document.getElementById('ciudadModal'));
+            modal.show();
+        }
+
+        function filtrarPorCiudad(ciudad) {
+            window.location.href = '/Murales/Index?ciudad=' + encodeURIComponent(ciudad);
+        }
+
+        function mostrarTodosMurales() {
+            window.location.href = '/Murales/Index';
+        }
+
     </script>
 
 
@@ -189,7 +218,14 @@
                 <img id="modalImagen" src="" class="img-fluid mb-3 rounded" alt="Imagen del mural" />
                 <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
                 <p><strong>Descripción:</strong> <span id="modalDescripcion"></span></p>
-                <p><strong>Ciudad:</strong> <span id="modalCiudad"></span></p>
+                <p>
+                    <strong>Ciudad:</strong>
+                    <select id="modalCiudad" class="form-select" disabled>
+                        <option value="Cali">Cali</option>
+                        <option value="Bogota">Bogotá</option>
+                    </select>
+                </p>
+
                 <div id="comentariosContainer">
                     <h5>Comentarios:</h5>
                     <ul id="comentariosLista" class="list-unstyled">
@@ -207,4 +243,18 @@
     </div>
 </div>
 
-
+<!-- Modal de búsqueda de ciudad -->
+<div class="modal fade" id="ciudadModal" tabindex="-1" aria-labelledby="ciudadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ciudadModalLabel">Selecciona una ciudad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <button class="btn btn-outline-primary m-2" onclick="filtrarPorCiudad('Cali')">Cali</button>
+                <button class="btn btn-outline-primary m-2" onclick="filtrarPorCiudad('Bogota')">Bogotá</button>
+            </div>
+        </div>
+    </div>
+</div>

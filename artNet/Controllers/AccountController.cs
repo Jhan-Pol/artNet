@@ -121,7 +121,7 @@ namespace artNet.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Murales");
             }
 
             return View();
@@ -139,7 +139,7 @@ namespace artNet.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Murales");
                     }
                 }
 
