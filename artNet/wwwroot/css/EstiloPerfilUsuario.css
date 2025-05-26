@@ -1,0 +1,127 @@
+﻿:root {
+    --primary: #6B21A8;
+    --primary-foreground: #ffffff;
+    --secondary: #EC4899;
+    --secondary-foreground: #ffffff;
+    --accent: #EF4444;
+    --accent-foreground: #ffffff;
+    --background: #ffffff;
+    --foreground: #020617;
+    --card: #ffffff;
+    --card-foreground: #020617;
+    --popover: #ffffff;
+    --popover-foreground: #020617;
+    --muted: #F1F5F9;
+    --muted-foreground: #64748B;
+    --border: #E2E8F0;
+    --input: #E2E8F0;
+    --ring: #6B21A8;
+}
+
+[data-theme="dark"] {
+    --primary: #9333EA;
+    --primary-foreground: #ffffff;
+    --secondary: #DB2777;
+    --secondary-foreground: #ffffff;
+    --accent: #DC2626;
+    --accent-foreground: #ffffff;
+    --background: #020617;
+    --foreground: #ffffff;
+    --card: #1E293B;
+    --card-foreground: #ffffff;
+    --popover: #1E293B;
+    --popover-foreground: #ffffff;
+    --muted: #334155;
+    --muted-foreground: #94A3B8;
+    --border: #1E293B;
+    --input: #1E293B;
+    --ring: #9333EA;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Poppins', sans-serif;
+}
+
+.profile-header {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    min-height: 400px;
+    position: relative;
+}
+
+    .profile-header .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1572293007243-6fc86c3f6d98') center/cover;
+        opacity: 0.15;
+    }
+
+.profile-img-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 5px solid var(--background);
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    transform: rotate(-5deg);
+    transition: transform 0.3s ease;
+}
+
+    .profile-img:hover {
+        transform: rotate(0deg);
+    }
+
+.profile-card, .contact-card, .stats-card {
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+    .profile-card:hover, .contact-card:hover, .stats-card:hover {
+        transform: translateY(-5px);
+    }
+
+.stat-item h4 {
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.portfolio-preview img {
+    transition: transform 0.3s ease;
+}
+
+    .portfolio-preview img:hover {
+        transform: scale(1.05);
+    }
+
+.btn-outline-light:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.form-check-input:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        min-height: 300px;
+    }
+
+    .profile-img {
+        width: 150px;
+        height: 150px;
+    }
+}

@@ -3,7 +3,6 @@ using artNet.Infraestructure;
 using artNet.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace artNet.Controllers
 {
