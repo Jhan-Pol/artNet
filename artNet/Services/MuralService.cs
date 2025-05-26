@@ -26,7 +26,7 @@ namespace artNet.Services
                 return false;
             }
 
-            // Buscar al artista por su email
+            
             var artista = await _context.Artistas
                 .FirstOrDefaultAsync(a => a.email == userEmail);
 
@@ -36,7 +36,7 @@ namespace artNet.Services
                 return false;
             }
 
-            // Guardar el archivo de imagen en el servidor
+            
             var imagenPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", imagen.FileName);
 
             using (var stream = new FileStream(imagenPath, FileMode.Create))
@@ -44,7 +44,7 @@ namespace artNet.Services
                 await imagen.CopyToAsync(stream);
             }
 
-            // Obtener la URL relativa de la imagen
+            
             var imagenUrl = $"/images/{imagen.FileName}";
 
             var mural = new Mural

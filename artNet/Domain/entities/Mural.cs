@@ -14,8 +14,8 @@ namespace artNet.Domain.Entities
         public string ImagenUrl { get; set; }
         public string Ciudad { get; set; }
         public DateTime FechaCreacion { get; set; }
-        public Guid ArtistaId { get; set; } // Clave foránea a IdentityUser
-        public Artista Artista { get; set; } // Navegación
+        public Guid ArtistaId { get; set; } 
+        public Artista Artista { get; set; } 
         public virtual ICollection<Like> Likes { get; set; }
     }
 }

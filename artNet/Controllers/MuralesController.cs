@@ -35,7 +35,7 @@ public class MuralesController : Controller
     }
 
 
-    // Solo para artistas autenticados
+    
     [Authorize(Roles = "Artista")]
     [HttpGet]
     public IActionResult Create()
