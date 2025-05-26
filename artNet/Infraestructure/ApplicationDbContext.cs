@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using artNet.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,6 +13,13 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
+=======
+﻿using artNet.Domain.entities;
+using artNet.Domain.Entities.Mural;
+using artNet.Domain.Entities.User;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> dev/aguirre
 
 namespace artNet.Infraestructure
 {

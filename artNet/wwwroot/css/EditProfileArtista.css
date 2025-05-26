@@ -1,0 +1,301 @@
+﻿:root {
+    --primary: #6B21A8;
+    --primary-foreground: #ffffff;
+    --secondary: #EC4899;
+    --secondary-foreground: #ffffff;
+    --accent: #EF4444;
+    --accent-foreground: #ffffff;
+    --background: #ffffff;
+    --foreground: #020617;
+    --card: #ffffff;
+    --card-foreground: #020617;
+    --popover: #ffffff;
+    --popover-foreground: #020617;
+    --muted: #F1F5F9;
+    --muted-foreground: #64748B;
+    --border: #E2E8F0;
+    --input: #E2E8F0;
+    --ring: #6B21A8;
+}
+
+[data-theme="dark"] {
+    --primary: #9333EA;
+    --primary-foreground: #ffffff;
+    --secondary: #DB2777;
+    --secondary-foreground: #ffffff;
+    --accent: #DC2626;
+    --accent-foreground: #ffffff;
+    --background: #020617;
+    --foreground: #ffffff;
+    --card: #1E293B;
+    --card-foreground: #ffffff;
+    --popover: #1E293B;
+    --popover-foreground: #ffffff;
+    --muted: #334155;
+    --muted-foreground: #94A3B8;
+    --border: #1E293B;
+    --input: #1E293B;
+    --ring: #9333EA;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+}
+
+.profile-header {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    min-height: 500px;
+    position: relative;
+}
+
+    .profile-header .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1572293007243-6fc86c3f6d98') center/cover;
+        opacity: 0.15;
+    }
+
+.profile-img-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border: 8px solid var(--background);
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+    transform: rotate(-5deg);
+    transition: transform 0.3s ease;
+    border-radius: 15px;
+}
+
+    .profile-img:hover {
+        transform: rotate(0deg);
+    }
+
+.profile-card, .contact-card, .stats-card {
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+    .profile-card:hover, .contact-card:hover, .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+.stat-item h4 {
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.portfolio-preview img {
+    transition: transform 0.3s ease;
+}
+
+    .portfolio-preview img:hover {
+        transform: scale(1.05);
+    }
+
+.btn-outline-light:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.form-check-input:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.mural-card {
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+    .mural-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+.mural-info {
+    padding: 1rem;
+    background: var(--card);
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.awards-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+}
+
+    .awards-card li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+.artist-bio {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-top: 1rem;
+}
+
+.rainbow-bg {
+    background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), #4CAF50, #2196F3 );
+    animation: gradientBG 15s ease infinite;
+}
+
+.gradient-overlay {
+    background: linear-gradient(120deg, rgba(147, 51, 234, 0.9), rgba(219, 39, 119, 0.9), rgba(220, 38, 38, 0.8));
+}
+
+.btn-glow {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary-gradient {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 0 15px var(--primary);
+}
+
+.btn-secondary-gradient {
+    background: linear-gradient(45deg, var(--secondary), var(--accent));
+    color: white;
+    box-shadow: 0 0 15px var(--secondary);
+}
+
+.rainbow-border {
+    border: none;
+    position: relative;
+    background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), #4CAF50, #2196F3 );
+    padding: 3px;
+}
+
+    .rainbow-border > * {
+        background: var(--card);
+        height: 100%;
+    }
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.btn-accent-gradient {
+    background: linear-gradient(45deg, var(--accent), var(--primary));
+    color: white;
+    box-shadow: 0 0 15px var(--accent);
+}
+
+    .btn-accent-gradient:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px var(--accent);
+    }
+
+.edit-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(0,0,0,0.7);
+    padding: 1rem;
+    border-radius: var(--radius);
+}
+
+.edit-mural:hover .edit-overlay,
+.profile-img-container:hover .edit-overlay {
+    opacity: 1;
+}
+
+.edit-mural {
+    position: relative;
+    overflow: hidden;
+}
+
+.form-control {
+    background: var(--input);
+    border-color: var(--border);
+    color: var(--foreground);
+}
+
+    .form-control:focus {
+        background: var(--input);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px var(--ring);
+        color: var(--foreground);
+    }
+
+.input-group .btn-outline-danger {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+    .input-group .btn-outline-danger:hover {
+        background: var(--accent);
+        color: var(--accent-foreground);
+    }
+
+.form-label {
+    color: var(--foreground);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.btn-group {
+    gap: 0.5rem;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* 🔧 NUEVO: Estilo para el formulario de edición */
+.edit-form-container {
+    background: var(--card);
+    color: var(--card-foreground);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        min-height: 400px;
+    }
+
+    .profile-img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .mural-card {
+        margin-bottom: 2rem;
+    }
+}

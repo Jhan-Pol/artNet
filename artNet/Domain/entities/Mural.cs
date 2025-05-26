@@ -1,7 +1,4 @@
-using artNet.Domain.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
 namespace artNet.Domain.Entities
 {
@@ -19,5 +16,5 @@ namespace artNet.Domain.Entities
         public virtual ICollection<Like> Likes { get; set; }
     }
 }
-    
+
 

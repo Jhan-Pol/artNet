@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using artNet.Models;
+﻿using artNet.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace artNet.Controllers
 {
@@ -26,7 +26,18 @@ namespace artNet.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var model = new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(model);
         }
+
+
+
+
+
+
     }
 }

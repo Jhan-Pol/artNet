@@ -1,68 +1,129 @@
-﻿<!-- Header -->
-<div class="text-white p-4 rounded" style="background: linear-gradient(to right, #8e2de2, #4a00e0); position: relative;">
-    <img src="~/images/profile.jpg" alt="Profile Picture" class="rounded-circle" style="width: 120px; position: absolute; top: -60px; left: 20px;">
-    <div class="ms-5 ps-5 pt-3">
-        <h2>Urban Canvas</h2>
-        <p>Street Artist | Muralist</p>
-        <button class="btn btn-outline-light btn-sm me-2">Edit Profile</button>
-        <label class="form-check-label text-white">
-            <input type="checkbox" class="form-check-input"> Dark Mode
-        </label>
-    </div>
-</div>
-
-<!-- Main Sections -->
-<div class="row mt-5">
-
-    <!-- About Me -->
-    <div class="col-md-8 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">About Me</h5>
-                <p class="card-text">
-                    Urban artist specializing in large-scale murals and street installations.
-                    Creating art that speaks to the soul of the city.
-                </p>
-                <div class="d-flex justify-content-between">
-                    <img src="~/images/artwork1.jpg" alt="Artwork 1" width="100">
-                    <img src="~/images/artwork2.jpg" alt="Artwork 2" width="100">
-                    <img src="~/images/artwork3.jpg" alt="Artwork 3" width="100">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contact & Social -->
-    <div class="col-md-4 mb-4">
-        <div class="card shadow-sm mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Contact & Social</h5>
-                <p><i class="bi bi-envelope"></i> artist@urbancanvas.com</p>
-                <p><i class="bi bi-geo-alt"></i> Street Art District, NYC</p>
-                <p><i class="bi bi-instagram"></i> urbancanvas</p>
-            </div>
-        </div>
-
-        <!-- Statistics -->
-        <div class="card shadow-sm">
-            <div class="card-body text-center">
-                <h5 class="card-title">Statistics</h5>
-                <div class="row">
-                    <div class="col">
-                        <h4 class="text-purple">156</h4>
-                        <p>Projects</p>
+﻿@model ArtistaViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Artista - Street Art Gallery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/EditProfileArtista.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Encabezado -->
+        <header class="profile-header text-white position-relative rainbow-bg">
+            <div class="overlay gradient-overlay"></div>
+            <div class="container position-relative py-5">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center">
+                        <div class="profile-img-container">
+                            @if (!string.IsNullOrEmpty(Model.ImagenPerfil))
+                            {
+                                <img src="@Model.ImagenPerfil" alt="Imagen de perfil" class="profile-img" />
+                            }
+                            else
+                            {
+                                <img src="https://via.placeholder.com/150" alt="Sin imagen" class="profile-img" />
+                            }
+                        </div>
                     </div>
-                    <div class="col">
-                        <h4 class="text-purple">89</h4>
-                        <p>Clients</p>
-                    </div>
-                    <div class="col">
-                        <h4 class="text-purple">12</h4>
-                        <p>Awards</p>
+                    <div class="col-md-9">
+                        <h1 class="display-4 fw-bold">@Model.Nombre @Model.LastName</h1>
+                        <p class="lead">@Model.City, @Model.Country</p>
+                        <p class="artist-bio">@Model.Bibliografia</p>
+                        <div class="d-flex gap-3 mt-3">
+                            <button class="btn btn-glow btn-primary-gradient">Solicitar Comisión</button>
+                            <button class="btn btn-glow btn-secondary-gradient">Ver Galería</button>
+                            <a class="btn btn-glow btn-accent-gradient" asp-controller="Profile" asp-action="EditProfile">
+                                <i class="bi bi-pencil-square me-2"></i>Editar Perfil
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
+
+        <!-- Mensaje de éxito -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show m-4" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <!-- Cuerpo principal -->
+        <main class="container py-5">
+            <div class="row g-4">
+                <!-- Columna izquierda -->
+                <div class="col-lg-8">
+                    <section class="card profile-card rainbow-border">
+                        <div class="card-body">
+                            <h2>Sobre el Artista</h2>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Nombre:</strong> @Model.Nombre</li>
+                                <li class="list-group-item"><strong>Apellido:</strong> @Model.LastName</li>
+                                <li class="list-group-item"><strong>Edad:</strong> @Model.Age</li>
+                                <li class="list-group-item"><strong>Ciudad:</strong> @Model.City</li>
+                                <li class="list-group-item"><strong>País:</strong> @Model.Country</li>
+                                <li class="list-group-item"><strong>Teléfono:</strong> @Model.Phone</li>
+                                <li class="list-group-item"><strong>Email:</strong> @Model.Email</li>
+                                <li class="list-group-item"><strong>Instagram:</strong> @Model.Instagram</li>
+                                <li class="list-group-item"><strong>Disponibilidad:</strong> @Model.Disponibilidad</li>
+                                <li class="list-group-item"><strong>Bibliografía:</strong> @Model.Bibliografia</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                   
+
+                    <section class="card mt-4">
+                        <div class="card-body">
+                            <h3>Exhibiciones Recientes</h3>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Bienal de Arte Urbano - Nueva York, 2023</li>
+                                <li class="list-group-item">Festival de Street Art - Berlín, 2022</li>
+                                <li class="list-group-item">Muralismo Contemporáneo - CDMX, 2022</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Columna derecha -->
+                <div class="col-lg-4">
+                    <section class="card contact-card">
+                        <div class="card-body">
+                            <h3>Contacto y Comisiones</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3"><i class="bi bi-envelope me-2"></i>@Model.Email</li>
+                                <li class="mb-3"><i class="bi bi-geo-alt me-2"></i>@Model.City, @Model.Country</li>
+                                <li class="mb-3"><i class="bi bi-instagram me-2"></i>@Model.Instagram</li>
+                                <li class="mb-3"><i class="bi bi-palette me-2"></i>@Model.Disponibilidad</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="card mt-4 awards-card">
+                        <div class="card-body">
+                            <h3>Premios y Reconocimientos</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">🏆 Urban Art Excellence Award 2023</li>
+                                <li class="mb-2">🎨 Mejor Mural - Street Art Festival</li>
+                                <li class="mb-2">📚 Destacado en "Artistas Urbanos Contemporáneos"</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    
+                </div>
+            </div>
+        </main>
     </div>
 
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
