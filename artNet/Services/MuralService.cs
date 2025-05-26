@@ -1,13 +1,8 @@
 ﻿using artNet.Domain.Entities.Mural;
-using artNet.Domain.Entities;
 using artNet.Infraestructure;
 using artNet.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using artNet.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace artNet.Services
 {

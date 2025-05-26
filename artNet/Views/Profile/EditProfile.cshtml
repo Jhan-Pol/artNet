@@ -1,0 +1,121 @@
+﻿@model ArtistaViewModel
+
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Art Gallery - Editar Perfil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/EditProfileArtista.css">
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Encabezado -->
+        <header class="profile-header text-white position-relative rainbow-bg">
+            <div class="overlay gradient-overlay"></div>
+            <div class="container position-relative py-5">
+                <div class="row align-items-center">
+                    <div class="col-md-3 text-center">
+                        <div class="profile-img-container">
+                            <img src="@Model.ImagenPerfil ?? " https: //via.placeholder.com/150"" alt="Artist Profile" class="profile-img">
+                            <div class="edit-overlay mt-2">
+                                <label class="btn btn-light btn-sm">
+                                    <i class="bi bi-camera-fill"></i> Cambiar URL de Foto
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <h1 class="text-white">Editar Perfil</h1>
+                        <p class="text-light">Actualiza tu información profesional y artística</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Formulario de edición -->
+        <main class="container py-5">
+            <form asp-action="EditProfile" method="post" class="row g-4">
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Columna izquierda -->
+                <div class="col-lg-8">
+                    <div class="card profile-card rainbow-border">
+                        <div class="card-body">
+                            <h2 class="mb-4">Información Personal</h2>
+
+                            <div class="mb-3">
+                                <label asp-for="Nombre" class="form-label">Nombre</label>
+                                <input asp-for="Nombre" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="LastName" class="form-label">Apellido</label>
+                                <input asp-for="LastName" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Age" class="form-label">Edad</label>
+                                <input asp-for="Age" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="City" class="form-label">Ciudad</label>
+                                <input asp-for="City" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Country" class="form-label">País</label>
+                                <input asp-for="Country" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Phone" class="form-label">Teléfono</label>
+                                <input asp-for="Phone" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="ImagenPerfil" class="form-label">Imagen de Perfil (URL)</label>
+                                <input asp-for="ImagenPerfil" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h3>Bibliografía</h3>
+                            <div class="mb-3">
+                                <label asp-for="Bibliografia" class="form-label">Biografía Corta</label>
+                                <textarea asp-for="Bibliografia" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna derecha -->
+                <div class="col-lg-4">
+                    <div class="card contact-card">
+                        <div class="card-body">
+                            <h3>Redes y Disponibilidad</h3>
+                            <div class="mb-3">
+                                <label asp-for="Instagram" class="form-label">Instagram</label>
+                                <input asp-for="Instagram" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Disponibilidad" class="form-label">Disponibilidad</label>
+                                <input asp-for="Disponibilidad" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary-gradient">Guardar Cambios</button>
+                        <a asp-action="Profile" class="btn btn-outline-secondary">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

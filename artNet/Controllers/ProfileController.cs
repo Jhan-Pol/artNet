@@ -13,5 +13,21 @@ namespace artNet.Controllers
         {
             return View();
         }
+
+        public IActionResult EditProfileArtista()
+        {
+            return View();
+        }
+
+        
+           
+
+        
+
+
+
+
+
+
     }
 }

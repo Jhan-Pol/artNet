@@ -1,13 +1,11 @@
-using artNet.Infraestructure.Data;
 using artNet.Infraestructure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using artNet.Infraestructure.Data;
+using artNet.Services;
+
+using artNet.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
-using artNet.Services;
-using artNet.Services.Interfaces;
+using ApplicationDbContext = artNet.Infraestructure.ApplicationDbContext;
 
 namespace artNet
 {
@@ -20,12 +18,18 @@ namespace artNet
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-          
+            
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
+
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IMuralService, MuralService>();
             builder.Services.AddControllersWithViews();
+           
+
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options =>
             {
@@ -44,9 +48,12 @@ namespace artNet
                 options.SlidingExpiration = true; // Opcional: renueva si hay actividad
             });
 
-            
-            builder.Services.AddControllersWithViews();
 
+           
+            //
+            builder.Services.AddScoped<ArtistaService>();
+            builder.Services.AddHttpContextAccessor();
+            //
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -64,6 +71,7 @@ namespace artNet
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -75,7 +83,7 @@ namespace artNet
                 name: "default",
 
               //  pattern: "{controller=Account}/{action=Login}/{id?}")
-              pattern: "{controller=Profile}/{action=ProfileArtista}/{id?}")
+              pattern: "{controller=Account}/{action=Login}/{id?}")
                 .WithStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();

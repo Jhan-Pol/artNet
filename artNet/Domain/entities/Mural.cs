@@ -1,7 +1,4 @@
-using artNet.Domain.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
 // Models/Mural.cs
 namespace artNet.Domain.Entities.Mural
@@ -19,5 +16,5 @@ namespace artNet.Domain.Entities.Mural
         public Artista Artista { get; set; } // Navegación
     }
 }
-    
+
 

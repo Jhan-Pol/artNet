@@ -1,16 +1,10 @@
-﻿using artNet.Domain.Entities.Mural;
-using artNet.Domain.Entities; // Artista
+﻿using artNet.Infraestructure;
 using artNet.Models;
-using artNet.Services; // Importa el servicio
+using artNet.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using System.IO;
-using artNet.Infraestructure;
-using artNet.Services.Interfaces;
 
 public class MuralesController : Controller
 {

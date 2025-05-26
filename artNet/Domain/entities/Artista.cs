@@ -31,5 +31,9 @@ public class Artista
     [StringLength(50)]
     public virtual string email { get; set; }
 
+    public string? Bibliografia { get; set; }
+    public string? Instagram { get; set; }
+    public string? Disponibilidad { get; set; }
+
     public virtual ICollection<Mural>? Murales { get; set; } // Relación uno a muchos
 }
