@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 ﻿using artNet.Domain.Entities;
-=======
-﻿using artNet.Domain.Entities.Mural;
->>>>>>> dev/aguirre
+
+
+
 using artNet.Infraestructure;
 using artNet.Models;
 using artNet.Services.Interfaces;

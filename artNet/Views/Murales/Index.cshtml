@@ -26,9 +26,7 @@
             <div class="d-flex align-items-center" style="font-size: 20px; cursor:pointer;" onclick="abrirModalCiudad()" title="Filtrar Murales">
                 <i class="bi bi-search me-2"></i> Buscar
             </div>
-            <div class="nav-item" style="font-size: 20px" title="Perfil">
-                <i class="bi bi-person-circle"></i> Perfil
-            </div>
+            
             @if (User.Identity.IsAuthenticated && User.IsInRole("Artista"))
 
             {
@@ -38,7 +36,16 @@
                     
                 </a>
                 
+                <a asp-action="Profile" asp-controller="Profile" class="btn btn-primary">
+                    <i class="bi bi-person-circle"></i> Perfil
+                </a>
 
+            }
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Usuario"))
+            {
+                <a asp-action="ProfileUsuario" asp-controller="Profile" class="btn btn-primary">
+                    <i class="bi bi-person-circle"></i> Perfil
+                </a>
             }
             <!-- Formulario oculto para logout -->
             <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" style="display:none;"></form>

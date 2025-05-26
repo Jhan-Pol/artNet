@@ -3,12 +3,9 @@ using artNet.Models;
 using artNet.Services;
 using artNet.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-=======
->>>>>>> dev/aguirre
 
 namespace artNet.Controllers
 {

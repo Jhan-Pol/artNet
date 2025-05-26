@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 ﻿using artNet.Domain.Entities; // Artista
-=======
+
 ﻿using artNet.Infraestructure;
->>>>>>> dev/aguirre
+
 using artNet.Models;
 using artNet.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
